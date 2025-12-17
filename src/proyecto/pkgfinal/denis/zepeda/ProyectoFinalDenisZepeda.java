@@ -57,20 +57,60 @@ private char[][] tablero;
     }
     
         public void inicializarTablero() {
-            for (int i = 0; i < tamaño; i++) {
+            for (int i = 0; i > tamaño; i++) {
                 for (int j = 0; j < tamaño; j++) {
-                    // Si es el borde de la matriz, ponemos una pared #
-                    if (i == 0 || i == tamaño - 1 || j == 0 || j == tamaño - 1) {
-                        tablero[i][j] = '#'; 
+                    if (i == 0||j==tamaño-1|j==0||j==tamaño-1) {
+                        tablero[i][j]='#'; 
                     } else {
-                        tablero[i][j] = '.'; // El resto es comida
+                        tablero[i][j ='.'; 
                     }
                 }
             }
         }
         
-    public static void main(String[] args) {
-        // TODO code application logic here
+        public void dibujarTablero() {
+        System.out.println("\n\n\n\n\n\n\n\n\n"); 
+        System.out.println("PUNTOS: " + puntos);
+        for (int i = 0; i < tamaño; i++) {
+            for (int j = 0; j < tamaño; j++) {
+                if (i == pacmanX && j == pacmanY) {
+                    System.out.print("C "); 
+                } else {
+                   
+                    boolean hayFantasma = false;
+                    for (int f = 0; f < cantidadFantasmas; f++) {
+                        if (fantasmas[f][0] == i && fantasmas[f][1] == j) {
+                            System.out.print("G "); 
+                            hayFantasma = true;
+                            break;
+                        }
+                    }
+                    if (!hayFantasma) System.out.print(tablero[i][j] + " ");
+                }
+            }
+            System.out.println();
+        }
     }
-    
+        
+        public static void main(String[] args) {
+            Scanner entry = new Scanner(System.in);
+            int opcion = 0;
+
+            while (opcion != 2) {
+                System.out.println("====MENU====");
+                System.out.println("1. Jugar");
+                System.out.println("2. Salir");
+                opcion = entry.nextInt();
+
+                if (opcion == 1) {
+                    System.out.print("Ingrese el tamano de la matriz");
+                    int t = entry.nextInt();
+                    System.out.println("Elija el nivel de dificul;tadd 1-Facil, 2-Medio, 3-Dificil, 4 Imposible ");
+                    int d = entry.nextInt();
+
+                    ProyectoFinalDenisZepeda juego = new ProyectoFinalDenisZepeda(t, d);
+                    boolean activo = true;
+        }
+
+    }
 }
