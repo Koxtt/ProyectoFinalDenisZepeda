@@ -12,7 +12,8 @@ import java.util.Scanner;
  * @author 
  */
 public class ProyectoFinalDenisZepeda {
-
+    
+    // Variables de estado del juego
     private char[][] tablero;       
     private int tamaño;          
     private int pacmanX, pacmanY; 
@@ -22,6 +23,7 @@ public class ProyectoFinalDenisZepeda {
     private Scanner teclado = new Scanner(System.in);
     private Random azar = new Random();
     
+    // Configura valores iniciales y la dificultad del jueko
     public ProyectoFinalDenisZepeda(int t, int dificultad) {
         this.tamaño = t;
         this.tablero = new char[t][t];
@@ -29,7 +31,7 @@ public class ProyectoFinalDenisZepeda {
         this.pacmanY = 1; 
         this.puntos = 0;
 
- 
+        // Switch para la seleccion de cantidad de fantasmas
         switch (dificultad) {
             case 1: 
                     cantidadFantasmas = 2;
@@ -55,7 +57,8 @@ public class ProyectoFinalDenisZepeda {
         
         inicializarTablero();
     }
-    
+        
+    //crea los bordes y la comida del juego
         public void inicializarTablero() {
                for (int i = 0; i < tamaño; i++) {
                    for (int j = 0; j < tamaño; j++) {
@@ -68,19 +71,20 @@ public class ProyectoFinalDenisZepeda {
                }
            }
         
+        //muestra el puntaje y el tablero
         public void dibujarTablero() {
         System.out.println("\n");
         System.out.println("PUNTOS: " + puntos);
         for (int i = 0; i < tamaño; i++) {
             for (int j = 0; j < tamaño; j++) {
                 if (i == pacmanX && j == pacmanY) {
-                    System.out.print(":v "); //Pacman
+                    System.out.print(":v "); //Pacman/Jugador
                 } else {
                    
                     boolean hayFantasma = false;
                     for (int f = 0; f < cantidadFantasmas; f++) {
                         if (fantasmas[f][0] == i && fantasmas[f][1] == j) {
-                            System.out.print("G "); //Fantasmas
+                            System.out.print("G "); //Fantasmas/enemigos
                             hayFantasma = true;
                             break;
                         }
@@ -92,6 +96,7 @@ public class ProyectoFinalDenisZepeda {
         }
     }
         
+        //controla el movimiento del pacman
         public void moverPacman(int direccion) {
         int proximaX = pacmanX;
         int proximaY = pacmanY;
@@ -104,6 +109,7 @@ public class ProyectoFinalDenisZepeda {
         else
                     if (direccion == 4) proximaY++;
 
+        //validacion para solamente moverse si no hay ninguna pared
         if (tablero[proximaX][proximaY] != '#') {
             pacmanX = proximaX;
             pacmanY = proximaY;
@@ -113,12 +119,14 @@ public class ProyectoFinalDenisZepeda {
             }
         }
     }
+        // se mueven los fantasmas aleatoriamente 
         public void moverFantasmas() {
         for (int i = 0; i < cantidadFantasmas; i++) {
             int dir = azar.nextInt(4) + 1; // Aleatorio entre 1 y 4
             int fX = fantasmas[i][0];
             int fY = fantasmas[i][1];
-
+            
+            
             if (dir == 1 && tablero[fX-1][fY] != '#') fX--;
             else if (dir == 2 && tablero[fX+1][fY] != '#') fX++;
             else if (dir == 3 && tablero[fX][fY-1] != '#') fY--;
@@ -130,7 +138,7 @@ public class ProyectoFinalDenisZepeda {
     }
         
 
-        
+        //menu del juego
         public static void main(String[] args) {
         Scanner entry = new Scanner(System.in);
         int opc = 0;
@@ -142,9 +150,9 @@ public class ProyectoFinalDenisZepeda {
                 opc = entry.nextInt();
 
             if (opc == 1) {
-                System.out.print("Ingrese el tamano de la matriz");
+                System.out.print("Ingrese el tamano de la matriz");//el usuario ingresa el tamano del mapa
                 int t = entry.nextInt();
-                System.out.println("Elija el nivel de dificul;tadd 1-Facil, 2-Medio, 3-Dificil, 4 Imposible");
+                System.out.println("Elija el nivel de dificul;tadd 1-Facil, 2-Medio, 3-Dificil, 4 Imposible");//el usuario ingresa el nivel de dificultad
                 int d = entry.nextInt();
 
                 ProyectoFinalDenisZepeda juego = new ProyectoFinalDenisZepeda(t, d);
@@ -152,14 +160,14 @@ public class ProyectoFinalDenisZepeda {
 
                 while (activo) {
                     juego.dibujarTablero();
-                    System.out.print("Mover 1=Arriba 2=Abajo, 3=Izquierda, 4=Derecha, 0=Salir): ");
+                    System.out.print("Mover 1=Arriba 2=Abajo, 3=Izquierda, 4=Derecha, 0=Salir): "); //aqui ingresa 1 2 3 o 4 para moverse o 0 para salir del juego
                     int mov = entry.nextInt();
                     if (mov == 0) break;
 
                     juego.moverPacman(mov);
                     juego.moverFantasmas();
  
-                    
+                    //realiza una validacion para ver si no han chocado el jugador con el pacman 
                     for (int i = 0; i < juego.cantidadFantasmas; i++) {
                         if (juego.fantasmas[i][0] == juego.pacmanX && juego.fantasmas[i][1] == juego.pacmanY) {
                             juego.dibujarTablero();
@@ -172,4 +180,4 @@ public class ProyectoFinalDenisZepeda {
         }
         System.out.println("gracias por Jugar");
     }
-} // Fin de la clase
+} 
