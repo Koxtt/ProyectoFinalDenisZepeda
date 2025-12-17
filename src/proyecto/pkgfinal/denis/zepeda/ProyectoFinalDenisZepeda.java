@@ -158,18 +158,18 @@ public class ProyectoFinalDenisZepeda {
 
                     juego.moverPacman(mov);
                     juego.moverFantasmas();
-
-                    // Verificar si chocaron
+ 
+                    
                     for (int i = 0; i < juego.cantidadFantasmas; i++) {
                         if (juego.fantasmas[i][0] == juego.pacmanX && juego.fantasmas[i][1] == juego.pacmanY) {
                             juego.dibujarTablero();
-                            System.out.println("¡GAME OVER! Te atraparon.");
+                            System.out.println("¡GAME OVER!");
                             activo = false;
                         }
                     }
                 }
             }
         }
-        System.out.println("El Juego ha terminado!");
+        System.out.println("gracias por Jugar");
     }
 } // Fin de la clase
