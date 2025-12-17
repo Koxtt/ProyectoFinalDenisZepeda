@@ -113,28 +113,64 @@ private char[][] tablero;
             }
         }
     }
+        public void moverFantasmas() {
+        for (int i = 0; i < cantidadFantasmas; i++) {
+            int dir = azar.nextInt(4) + 1; // Aleatorio entre 1 y 4
+            int fX = fantasmas[i][0];
+            int fY = fantasmas[i][1];
+
+            if (dir == 1 && tablero[fX-1][fY] != '#') fX--;
+            else if (dir == 2 && tablero[fX+1][fY] != '#') fX++;
+            else if (dir == 3 && tablero[fX][fY-1] != '#') fY--;
+            else if (dir == 4 && tablero[fX][fY+1] != '#') fY++;
+
+            fantasmas[i][0] = fX;
+            fantasmas[i][1] = fY;
+        }
+    }
         
 
         
         public static void main(String[] args) {
-            Scanner entry = new Scanner(System.in);
-            int opcion = 0;
+        Scanner entry = new Scanner(System.in);
+        int opc = 0;
 
-            while (opcion != 2) {
+        while (opc != 2) {
                 System.out.println("====MENU====");
                 System.out.println("1. Jugar");
                 System.out.println("2. Salir");
-                opcion = entry.nextInt();
+                opc = entry.nextInt();
+            opc = entry.nextInt();
 
-                if (opcion == 1) {
-                    System.out.print("Ingrese el tamano de la matriz");
-                    int t = entry.nextInt();
-                    System.out.println("Elija el nivel de dificul;tadd 1-Facil, 2-Medio, 3-Dificil, 4 Imposible ");
-                    int d = entry.nextInt();
+            if (opc == 1) {
+                System.out.print("Ingrese el tamano de la matriz");
+                int t = entry.nextInt();
+                System.out.println("Elija el nivel de dificul;tadd 1-Facil, 2-Medio, 3-Dificil, 4 Imposible");
+                int d = entry.nextInt();
 
-                    ProyectoFinalDenisZepeda juego = new ProyectoFinalDenisZepeda(t, d);
-                    boolean activo = true;
+                ProyectoFinalDenisZepeda juego = new ProyectoFinalDenisZepeda(t, d);
+                boolean activo = true;
+
+                while (activo) {
+                    juego.dibujarTablero();
+                    System.out.print("Mover 1=Arriba 2=Abajo, 3=Izquierda, 4=Derecha, 0=Salir): ");
+                    int mov = entry.nextInt();
+                    if (mov == 0) break;
+
+                    juego.moverPacman(mov);
+                    juego.moverFantasmas();
+
+                    // Verificar si chocaron
+                    for (int i = 0; i < juego.cantidadFantasmas; i++) {
+                        if (juego.fantasmas[i][0] == juego.pacmanX && juego.fantasmas[i][1] == juego.pacmanY) {
+                            juego.dibujarTablero();
+                            System.out.println("¡GAME OVER! Te atraparon.");
+                            activo = false;
+                        }
+                    }
+                }
+            }
         }
-
+        System.out.println("El Juego ha terminado!");
     }
-}
+} // Fin de la clase
