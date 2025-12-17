@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class ProyectoFinalDenisZepeda {
 
-private char[][] tablero;       
+    private char[][] tablero;       
     private int tamaño;          
     private int pacmanX, pacmanY; 
     private int[][] fantasmas;     
@@ -140,7 +140,6 @@ private char[][] tablero;
                 System.out.println("1. Jugar");
                 System.out.println("2. Salir");
                 opc = entry.nextInt();
-            opc = entry.nextInt();
 
             if (opc == 1) {
                 System.out.print("Ingrese el tamano de la matriz");
